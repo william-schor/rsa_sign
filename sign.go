@@ -13,25 +13,24 @@ import (
  	"encoding/hex"
  	"crypto/x509"
  	"errors"
+ 	"strings"
 )
 
 
 const (
-	usage = "Usage: [-c <file to check> <public key>, -getkey, -genkey, -setkey <key>, -key <temp key> <in> <out>, <in> <out>]"
+	usage = "Usage: [-c <file to check> <public key>, -getBook, -genkey, -setkey <key>, -key <temp key> <in> <out>, <in> <out>]"
 	appendText = "\n\n------------------------------------------\n"
 )
 
-var privateKeyPath = "/default/key" // This will be set at compile time
-var home = ""
+var addressBook = "$HOME/.keys" // This can be set at compile time
+var privateKeyPath = addressBook + "/me/private.key" 
+var publicKeyPath = addressBook + "/me/public.key"
 
 func main() {
 
 	if len(os.Args) < 2 {
 		usageHandler()
 	}
-
-	home, _ = filepath.Abs(filepath.Dir(os.Args[0]))
-	home = home + "/keys/"
 
 	mode := os.Args[1]
 	in   := ""
@@ -42,6 +41,7 @@ func main() {
 		if len(os.Args) < 5 {
 			usageHandler() // exits
 		}
+
 		checkSign(os.Args[2], os.Args[3], os.Args[4]) 
 		os.Exit(0)
 
@@ -53,8 +53,8 @@ func main() {
 		in, _ = filepath.Abs(os.Args[3])
 		out, _ = filepath.Abs(os.Args[4])
 	
-	case "-getkey":
-		fmt.Println("Current keypath:", privateKeyPath)
+	case "-getBook":
+		fmt.Println("Current address book:", addressBook)
 		os.Exit(0)
 
 	case "-genkey":
@@ -128,13 +128,28 @@ func check(err error) {
 
 
 func checkSign(infile string, signature string, keyFile string) {
-	
 	infile, _ = filepath.Abs(infile)
 	contents, err := ioutil.ReadFile(infile)
 	check(err)
 	contents = contents[:len(contents)-558]
-
 	signBytes := Decode(signature)
+	if keyFile[0] == '*' {
+		// keyFile is a path
+		keyFile, err = filepath.Abs(keyFile[1:])
+		check(err)
+	} else {
+		files, err := ioutil.ReadDir(addressBook)
+		check(err)
+		
+		for _, file := range files {
+			
+			if strings.Contains(file.Name(), keyFile) {
+				keyFile = filepath.Join(addressBook, file.Name())
+				break
+			}
+		}
+
+	}
 	publicKey := readPublicKey(keyFile)
 	hashed := sha256.Sum256([]byte(contents))
 
@@ -160,7 +175,7 @@ func genKey() {
 	check(err)
 	
 	writeTo(privateKeyPath, privKeyString)
-	writeTo(home + "public.key", pubKeyString)
+	writeTo(publicKeyPath, pubKeyString)
 	
 }
 
