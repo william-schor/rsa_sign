@@ -42,9 +42,9 @@ This payload is 558 bytes total (512 for the ciphertext).
 ```
 This write is 45 bytes.
 
-6. Write encrypted payload (now with key cipher) to file
+6. Write encrypted payload (now with key cipher) to file.
 
-### Address book sctructure
+### Address book structure
 
 By default, the address book is ~/.keys
 This directory contains me/ which contains public.key and private.key.
