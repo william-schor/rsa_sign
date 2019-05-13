@@ -55,6 +55,7 @@ The -genkey flag writes to me/
 
 Keys should be stored in the addressBook with the name: `<contact name>.key`
 
+
 ### Bash setup
 
 Add `source /path/to/bashscript.sh` to your .bash_profile
