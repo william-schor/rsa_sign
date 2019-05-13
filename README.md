@@ -16,9 +16,33 @@
 ```
 This payload is 558 bytes total (512 for the ciphertext).
 
+
 ### Encryption Scheme
 
-Not yet implemented.
+1. Generate symmetric key
+
+2. Encrypt payload (including signature) using AES, with symmetric key
+
+3. Encyrpt symmetic key with public key of recipient
+
+4. Append to payload, including newlines:
+```
+
+------------------------------------------
+< cipher of key >
+
+```
+This payload is 558 bytes total (512 for the ciphertext).
+
+5. Write to top of file, including newlines:
+```
+
+------------------------------------------
+
+```
+This write is 45 bytes.
+
+6. Write encrypted payload (now with key cipher) to file
 
 ### Address book sctructure
 
