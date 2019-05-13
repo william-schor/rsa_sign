@@ -27,9 +27,8 @@ const (
 )
 
 var addressBook = "$HOME/.keys" // This can be set at compile time
-var myPrivateKey = addressBook + "me/private.key" 
-var myPublicKey = addressBook + "me/public.key"
-
+var myPrivateKey = filepath.Join(addressBook, "me/private.key") 
+var myPublicKey = filepath.Join(addressBook, "me/public.key")
 func main() {
 
 	keyPtr := flag.String("key", "PATH TO KEY", "Usage: sign -key <temp private key> <file to sign> <outfile>")

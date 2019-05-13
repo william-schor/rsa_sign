@@ -37,7 +37,7 @@ function sign() {
 			echo "Usage: [-c <file to check> <public key>, -getBook, -genkey, -setkey <key>, -key <temp key> <in> <out>, -E <public key> <infile> <outfile>, -d <in> <out>, <in> <out>]"
 			return 
 		fi
-		go build -ldflags "-X main.addressBook=$2" -o $HOME/.sign/sign $HOME/.sign/sign.go
+		go build -ldflags "-X main.addressBook=`realpath $2`" -o $HOME/.sign/sign $HOME/.sign/sign.go
 		return 
 	fi
 

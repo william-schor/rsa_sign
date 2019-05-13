@@ -51,6 +51,10 @@ This directory contains me/ which contains public.key and private.key.
 
 The -genkey flag writes to me/
 
+#### Contact's keys
+
+Keys should be stored in the addressBook with the name: `<contact name>.key`
+
 ### Bash setup
 
 Add `source /path/to/bashscript.sh` to your .bash_profile
@@ -61,7 +65,7 @@ Add `source /path/to/bashscript.sh` to your .bash_profile
 
 `sign -key <key file> <infile> <outfile>` : Sign infile with temporary key. Write to outfile.
 
-`sign -setAddrBook` : Set the address book 
+`sign -setAddrBook` : Set the address book. 
 
 `sign -getBook` : Prints address of current address book
 
