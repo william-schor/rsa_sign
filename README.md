@@ -42,7 +42,11 @@ Add `source /path/to/bashscript.sh` to your .bash_profile
 `sign -getBook` : Prints address of current address book
 
 `sign -c <file to check> < public key>` : Check signature of file with the specified pulbic key.
+	--Note: `<public key>` can be a filepath or a name from the address book.
 
-To use custom file as public key: `sign -c <file to check> */path/to/key/file`, including the "*"
+`sign -d <in> <out>` : Decrypt the in file and write to the out file.
 
-To use name from address book: `sign -c <file to check> <Name>`, where the key is in addrBook and is `<Name>.key`
+`sign -E <public key> <in> <out>` : Sign the in file, encrypt it with the public key, write it to the out file.
+
+`sign <in> <out>` : Sign the in file, write to the out file.
+
