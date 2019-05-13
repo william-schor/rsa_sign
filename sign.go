@@ -292,6 +292,9 @@ func genRSAKey() {
 	pubKeyString, err := ExportRsaPublicKeyAsPemStr(pubKey)
 	check(err)
 	
+	fmt.Println(myPrivateKey)
+	fmt.Println(myPublicKey)
+
 	writeTo(myPrivateKey, privKeyString)
 	writeTo(myPublicKey, pubKeyString)	
 }
